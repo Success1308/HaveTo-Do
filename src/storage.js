@@ -1,6 +1,6 @@
 // Storage.js
-import createProject from './createProject';
-import createToDo from './createToDo';
+import Project from './project';
+import ToDo from './todo';
 
 
 export default function Storage(){
@@ -10,10 +10,10 @@ export default function Storage(){
   
 	const getProject = (projectName) => {
 		const projectData = JSON.parse(localStorage.getItem(projectName));
-        const project = createProject(projectData.name);
+        const project = Project(projectData.name);
 
 		projectData.toDos.forEach(todoData => {
-            const todo = createToDo(todoData.task, todoData.detail, todoData.dueDate, todoData.priority);
+            const todo = ToDo(todoData.task, todoData.detail, todoData.dueDate, todoData.priority);
             todo.completed = todoData.completed;
             project.addTodo(todo);
         });
