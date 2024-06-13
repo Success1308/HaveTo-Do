@@ -50,6 +50,13 @@ export default function DOM(){
 		// Remove todo from DOM
 	  };
 	
+	  const userName = localStorage.getItem('userName');
+	  if (!userName) {
+		  Home(); // 
+	  } else {
+		  loadProjects(); 
+	  }
+  
 
 	return {
 		loadProjects,
