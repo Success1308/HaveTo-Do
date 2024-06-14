@@ -2,7 +2,7 @@
 
 import { parseISO, format } from 'date-fns';
 
-export default function ToDo(task, detail, dueDate, priority){
+export default function ToDo(task, dueDate, priority){
 	let completed = false;
 	const parsedDueDate = parseISO(dueDate); 
 
@@ -17,7 +17,6 @@ export default function ToDo(task, detail, dueDate, priority){
 
 	return {
 		task,
-		detail,
 		dueDate: parsedDueDate,
 		priority,	
 		completed, 
