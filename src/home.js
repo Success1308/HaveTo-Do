@@ -1,5 +1,10 @@
 // home.js
+import Storage from './storage';
+import createLayout from './layout'; 
 
+
+const storage = Storage();
+const body = document.querySelector("body");
 
 export default function Home() {
     const mainContent = document.createElement('main');
@@ -50,7 +55,9 @@ export default function Home() {
     submitButton.addEventListener('click', () => {
         const name = nameInput.value.trim();
         if (name) {
-            localStorage.setItem('userName', name);
+            storage.saveUserName(name);
+            
+            createLayout();
         } else {
             customAlert.style.display = 'block';
         }

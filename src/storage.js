@@ -4,11 +4,11 @@ import ToDo from './todo';
 
 
 export default function Storage(){
-  const saveUserName = (userName) => {
+  const saveUserName = function(userName){
     localStorage.setItem("user-name", JSON.stringify(userName));
   }; 
 
-  const getUserName = () => {
+  const getUserName = function(){
     const userNameStored = JSON.parse(localStorage.getItem("user-name"));
     return userNameStored;
   }; 
@@ -19,6 +19,8 @@ export default function Storage(){
     
   const getProject = (projectName) => {
     const projectData = JSON.parse(localStorage.getItem(projectName));
+    if (!projectData) return null; 
+
     const project = Project(projectData.name);
 
     projectData.toDos.forEach(todoData => {
@@ -36,7 +38,7 @@ export default function Storage(){
           const projectName = localStorage.key(i);
           projects.push(getProject(projectName));
       }
-      return projects;
+      return projects.filter(project => project !== null); 
   };
     
   return {

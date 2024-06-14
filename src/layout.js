@@ -1,35 +1,41 @@
-// Importing sub-modules
-import { createHeader } from './header.js';
-import { createLeftSide } from './leftside.js';
-import { createBody } from './body.js';
-import { createRightSide } from './rightside.js';
-import { createFooter } from './footer.js';
+import { createHeader } from './header';
 
-// Function to create the entire layout
-export function createLayout() {
-  // Create main section element with class "layout"
-  const layoutSection = document.createElement('section');
-  layoutSection.classList.add('layout');
+// createLayout.js
+export default function createLayout() {
 
-  // Create and append header
+  const layoutSection1 = document.createElement('section');
+  layoutSection1.classList.add('layout');
+  let layoutSection = document.querySelector('layoutSection');
+
   const header = createHeader();
+  console.log(createHeader());
   layoutSection.appendChild(header);
 
-  // Create and append left side content
-  const leftSide = createLeftSide();
-  layoutSection.appendChild(leftSide);
-
-  // Create and append body content
-  const body = createBody();
-  layoutSection.appendChild(body);
-
-  // Create and append right side content
-  const rightSide = createRightSide();
-  layoutSection.appendChild(rightSide);
-
-  // Create and append footer
-  const footer = createFooter();
-  layoutSection.appendChild(footer);
-
+    
   return layoutSection;
 }
+
+
+// import { createHeader } from './leftside.js';
+// import { createBody } from './body.js';
+// import { createRightSide } from './rightside.js';
+// import { createFooter } from './footer.js';
+
+
+
+
+//   // Create and append left side content
+//   const leftSide = createLeftSide();
+//   layoutSection.appendChild(leftSide);
+
+//   // Create and append body content
+//   const body = createBody();
+//   layoutSection.appendChild(body);
+
+//   // Create and append right side content
+//   const rightSide = createRightSide();
+//   layoutSection.appendChild(rightSide);
+
+//   // Create and append footer
+//   const footer = createFooter();
+//   layoutSection.appendChild(footer);
