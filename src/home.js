@@ -55,7 +55,7 @@ export default function Home() {
     submitButton.addEventListener('click', () => {
         const name = nameInput.value.trim();
         if (name) {
-            storage.saveUserName(name);            
+            storage.saveUserName(name);          
             createLayout();
             body.innerHTML = ``;        
             body.appendChild(createLayout());       

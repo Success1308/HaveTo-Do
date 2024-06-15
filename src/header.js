@@ -48,3 +48,11 @@ export function createHeader() {
 
     return headerDiv;
 };
+
+// prototype
+// Function to update the quote dynamically
+// export function updateQuote() {
+//     if (quoteP) {
+//         quoteP.textContent = getRandomQuote().split(' - ')[0]; // Update quote content
+//     }
+// }

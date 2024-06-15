@@ -41,12 +41,21 @@ export default function Storage(){
       return projects.filter(project => project !== null); 
   };
     
+  const removeProject = (projectName) => {
+    localStorage.removeItem(projectName);
+    const keysToRemove = Object.keys(localStorage).filter(key => key.startsWith(`${projectName}-`));
+    keysToRemove.forEach(key => {
+        localStorage.removeItem(key);
+    });
+  };
+
   return {
     saveUserName,
     getUserName,
     saveProject,
     getProject,
-    getProjects
+    getProjects,
+    removeProject
   };
 };
   

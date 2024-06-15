@@ -10,11 +10,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const storage = Storage();
     const userName = storage.getUserName(); 
     const body = document.querySelector("body");
-
+  
     if (!userName) {
         Home();
     } else {
         body.innerHTML = ``;        
-        body.appendChild(createLayout());       ;
+        body.appendChild(createLayout()); 
     }
 });
