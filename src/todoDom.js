@@ -92,7 +92,7 @@ function createTodoBody() {
 			todoList.appendChild(newTodo);
 
 			const todoObject = { title: textValue, priority: priorityValue };
-			const project = storage.saveProject(currentProject.name);
+			const project = storage.getProject(currentProject.name);
 			project.addTodo(todoObject);
 			storage.saveProject(project);
 

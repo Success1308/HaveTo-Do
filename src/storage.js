@@ -20,7 +20,7 @@ export default function Storage(){
   };
     
   const getProject = (projectName) => {
-    const projectData = JSON.parse(localStorage.getItem(projectName));
+    const projectData = localStorage.getItem(projectName);
     if (!projectData) return null; 
 
     const project = Project(projectData.projectName);
