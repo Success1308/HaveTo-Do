@@ -1,7 +1,8 @@
 // project.js
 
 export default function Project(name){
-	const toDos = [];
+	const projectName = name;
+	let toDos = []; 
 
 	const addTodo = (todo) => {
 		toDos.push(todo);
@@ -16,7 +17,7 @@ export default function Project(name){
 	}
 
 	return {
-		name,
+		projectName,
 		toDos,
 		addTodo,
 		editTodo,

@@ -259,7 +259,6 @@ body{
 	background-color: var(--rside-color);
 	border: 0.05rem dashed #040404;
 	position: relative;
-	padding: 10px;
 }
   .footer { 
 	grid-area: footer;

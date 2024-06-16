@@ -13,18 +13,20 @@ export default function Storage(){
     return userNameStored;
   }; 
 
+
+  
   const saveProject = (project) => {
-    localStorage.setItem(project.name, JSON.stringify(project));
+    localStorage.setItem(project, JSON.stringify(project));
   };
     
   const getProject = (projectName) => {
     const projectData = JSON.parse(localStorage.getItem(projectName));
     if (!projectData) return null; 
 
-    const project = Project(projectData.name);
+    const project = Project(projectData.projectName);
 
-    projectData.toDos.forEach(todoData => {
-        const todo = ToDo(todoData.task, todoData.detail, todoData.dueDate, todoData.priority);
+    project.toDos.forEach(todoData => {
+        const todo = ToDo(todoData.title, todoData.priority); 
         todo.completed = todoData.completed;
         project.addTodo(todo);
     });

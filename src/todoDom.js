@@ -4,9 +4,26 @@
 import Storage from './storage';
 
 const storage = Storage();
-const project = storage.getProject("Today");
+let project = storage.getProject("Today");
+let currentProject = "Today"; 
 
- function createTodoBody() {
+function renderTodos(project1) {
+
+    const project = storage.getProject(project1);
+    if (!project) return;
+
+    const todoList = document.querySelector('.todo-list');
+    todoList.innerHTML = ''; 
+
+    project.toDos.forEach(todo => {
+        const todoElement = createTodoElement(todo.title, todo.priority);
+        todoList.appendChild(todoElement);
+    });
+}
+
+
+
+function createTodoBody() {
 	const bodyDiv = document.createElement('div');
 	bodyDiv.classList.add('body');
 
@@ -68,20 +85,28 @@ const project = storage.getProject("Today");
 	plusIcon.addEventListener('click', function() {
 		const textValue = inputTag.value;
 		const priorityValue = inputPrioritySelect.value;
-	
+
 		if (textValue && priorityValue) {
-			const newTodo =createTodoElement(textValue, priorityValue);
-			console.log(newTodo);
+
+			const newTodo = createTodoElement(textValue, priorityValue);
 			todoList.appendChild(newTodo);
+
+			const todoObject = { title: textValue, priority: priorityValue };
+			const project = storage.saveProject(currentProject.name);
+			project.addTodo(todoObject);
+			storage.saveProject(project);
+
 			inputTag.value = ''; 
 			inputPrioritySelect.value = inputOptionDefault.value;			
 		} else {
 			alert('Please fill out both the text and priority fields.');
 		}
 	});
+
 	bodyDiv.appendChild(todoInput);  
 	return bodyDiv;
-  }
+
+}
   
 
   
@@ -171,5 +196,6 @@ function createTodoElement(textValue, priorityValue) {
 
 export{
 	createTodoBody,
-	createTodoElement
+	createTodoElement,
+	renderTodos
 };
