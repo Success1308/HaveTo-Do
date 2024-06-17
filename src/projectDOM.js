@@ -2,12 +2,12 @@
 
 import Storage from './storage';
 import Project from './project';
-import {renderTodos, createTodoBody, createTodoElement} from './todoDom';
+import {renderTodos} from './todoDom';
 
 
 const storage = Storage();
 
-let currentProject;
+let currentProject = "Today";
 
 export function setCurrent(projectName) {
     currentProject = projectName;
@@ -24,7 +24,7 @@ projectList.className = 'project-list';
 
 // Create default project div
 const projectDefault = document.createElement('div');
-
+export {projectDefault};
 
 // create project
 function addProject(projectName) {
@@ -48,9 +48,8 @@ function createProjectElement(project) {
     removeButton.innerHTML = '<i class="fas fa-times"></i>';
     removeButton.addEventListener('click', () => {
         setCurrent(project.projectName);
-        removeProject(project.projectName);
-        projectDefault.style.backgroundColor = "red";
-        renderTodos("Today");
+        removeProject(project.projectName);     
+        
     });
 
     projectElement.appendChild(projectContent);
@@ -75,20 +74,16 @@ function createProjectElement(project) {
 
 // remove projects
 function removeProject(projectName) {
-
     // Remove from UI
     const projectElements = document.querySelectorAll('.project');
     projectElements.forEach(element => {
         if (element.textContent.trim() === projectName) {
             element.remove();            
         }
+        
     });
     // Remove from storage
     storage.removeProject(projectName);
-
-    // Set the default project
-    setCurrent("Today");
-    renderTodos(getCurrent());
 }
 
 export function createLeftSide() {
@@ -203,3 +198,6 @@ export function createLeftSide() {
 
     return leftSide;
 }
+
+
+

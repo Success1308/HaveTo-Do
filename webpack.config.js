@@ -10,6 +10,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 		path: path.resolve(__dirname, 'dist'),
 		clean: true,
 	}, 
+	devServer: {
+        hot: true,
+    },
 	plugins: [
 		new HtmlWebpackPlugin({
 			title: 'Todo',

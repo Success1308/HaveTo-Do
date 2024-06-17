@@ -365,7 +365,7 @@ body{
 
 .ago {
 	position: absolute;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     opacity: 0.7;
 	bottom: 2.2rem;
 	right: 0.8rem;
@@ -933,7 +933,7 @@ body{
 			border-radius: 5px;
 			margin-bottom: 10px; 
 			padding: 1rem; 
-			min-height: 150px;
+			min-height: 200px;
 			height: fit-content;
 		}
 		
@@ -950,7 +950,6 @@ body{
 		
 		.ago {
 			display: none;
-			font-size: 0.5rem;
 		}
 		
 		#Priority {

@@ -1,26 +1,31 @@
 // todoDom.js
 
 import Storage from './storage';
-import { getCurrent} from './projectDOM';
+import {setCurrent, getCurrent, projectDefault} from './projectDOM';
 import { formatDistanceToNow } from 'date-fns';
 
 const storage = Storage();
 const todoList = document.createElement('div');
 todoList.classList.add('todo-list');
 
+
 function renderTodos(project1) {
 	todoList.innerHTML = ''; 
-	const projectObject = storage.getProject(project1);
-
-	if (!projectObject) {	return;	};
-
-	projectObject.toDos.forEach(todo => {
-		const todoElement = createTodoElement(todo.task, todo.priority);
-		todoList.appendChild(todoElement);
-	});
-
+	const projectObject = storage.getProject(project1)  || storage.getProject("Today") ;
+	if(projectObject.projectName === "Today"){	
+		setCurrent("Today");	
+		projectDefault.style.backgroundColor = "#e4d9f2"; 
+		projectObject.toDos.forEach(todo => {
+			const todoElement = createTodoElement(todo.task, todo.priority, todo.createdAt);
+			todoList.appendChild(todoElement);
+		});
+	}else{
+		projectObject.toDos.forEach(todo => {
+			const todoElement = createTodoElement(todo.task, todo.priority, todo.createdAt);
+			todoList.appendChild(todoElement);
+		});
+	}
 }
-
 
 function createTodoBody() {
 
@@ -89,13 +94,17 @@ function createTodoBody() {
 		const priorityValue = inputPrioritySelect.value;
 
 		if (textValue && priorityValue && priorityValue !== 'Priority') {
-			const newTodo = createTodoElement(textValue, priorityValue);
+
+			const createdAt = new Date(); 
+
+			const newTodo = createTodoElement(textValue, priorityValue, createdAt);
 			todoList.appendChild(newTodo);
 
-			const todoObject = { task: textValue, priority: priorityValue };
+			const todoObject = { task: textValue, priority: priorityValue, createdAt};
 
 			const currentProject = getCurrent();
 			const projectObject = storage.getProject(currentProject);
+			
 			projectObject.toDos.push(todoObject);
 			storage.saveProject(projectObject); 
 
@@ -116,7 +125,7 @@ function createTodoBody() {
   
 
   
-function createTodoElement(textValue, priorityValue) {
+function createTodoElement(textValue, priorityValue, createdAt) {
     const todoElement = document.createElement('div');
     todoElement.classList.add('todo');
 
@@ -131,12 +140,20 @@ function createTodoElement(textValue, priorityValue) {
     const bottomSection = document.createElement('div');
     bottomSection.classList.add('bottom-section');
 
-
-    const createdAt = new Date(); 
+	// my minutes ago functionality is not working
+    
     const ago = document.createElement('p');
     ago.classList.add('ago');
     ago.textContent = formatDistanceToNow(createdAt, { addSuffix: true });
     bottomSection.appendChild(ago);
+
+	function updateTimeAgo() {
+        ago.textContent = formatDistanceToNow(createdAt, { addSuffix: true });
+    }
+
+    updateTimeAgo();
+    const intervalId = setInterval(updateTimeAgo, 60000);
+    todoElement.dataset.intervalId = intervalId;
 
     const prioritySelect = document.createElement('select');
     prioritySelect.name = 'Priority';

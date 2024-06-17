@@ -8,10 +8,13 @@ export default function ToDo(task, priority){
 		completed = !completed;
 	}
 
+	const createdAt = new Date(); 
+
 	return {
 		task,
 		priority,	
 		completed, 
 		toggleComplete, 
+		createdAt
 	}
 };

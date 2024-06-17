@@ -20,10 +20,6 @@ export default function Storage(){
     const gotProject = JSON.parse((localStorage.getItem(`project-${projectName}`)));
     return gotProject;
   };
-    
-  const projectExists = (projectName) => {
-    return localStorage.getItem(`project-${projectName}`) !== null;
-  };
 
 
   let projects = [];
@@ -52,7 +48,6 @@ export default function Storage(){
     getProject,
     loadProjects,
     removeProject,
-    projectExists
   };
 };
   

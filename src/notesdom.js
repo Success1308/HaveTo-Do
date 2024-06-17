@@ -1,4 +1,35 @@
 // NotesDom.js
+const divNoteList = document.createElement('div');
+divNoteList.classList.add('note-list');
+function removeNoteFromLocalStorage(noteContent) {
+	let notes = JSON.parse(localStorage.getItem('notes')) || [];
+	notes = notes.filter(note => note !== noteContent);
+	localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+
+function addNote(noteContent) {
+	const noteElement = createNoteElement(noteContent);
+
+	const divNoteList = document.querySelector('.note-list'); 
+	divNoteList.appendChild(noteElement);
+}
+
+function saveNoteToLocalStorage(noteContent) {
+	let notes = JSON.parse(localStorage.getItem('notes')) || [];
+	notes.push(noteContent);
+	localStorage.setItem('notes', JSON.stringify(notes));
+}
+
+
+function renderNotesFromLocalStorage() {
+	const notes = JSON.parse(localStorage.getItem('notes')) || [];
+	notes.forEach((noteContent) => {
+	  const noteElement = createNoteElement(noteContent);
+	  divNoteList.appendChild(noteElement);
+	});
+  }
+
 
 function createNoteElement(noteContent) {
 	// Create elements
@@ -20,6 +51,11 @@ function createNoteElement(noteContent) {
 	
 	const iRemoveNoteIcon = document.createElement('i');
 	iRemoveNoteIcon.classList.add('fas', 'fa-times');
+	iRemoveNoteIcon.addEventListener('click', () => {
+		divNoteList.removeChild(divNote);
+		removeNoteFromLocalStorage(noteContent);
+		renderNotesFromLocalStorage();
+	});
 	
 	// Constructing the note structure
 	buttonRemoveNote.appendChild(iRemoveNoteIcon);
@@ -39,13 +75,8 @@ function createNoteElement(noteContent) {
 	const h4Title = document.createElement('h4');
 	h4Title.textContent = "Note's";
 	
-	const divNoteList = document.createElement('div');
-	divNoteList.classList.add('note-list');
-	
-	const noteElement = createNoteElement("Sample - Note Lorem ipsum dolor, ipsum dolor Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit, autem?");
-	
-	divNoteList.appendChild(noteElement);
-	
+
+
 	const divInputRight = document.createElement('div');
 	divInputRight.classList.add('input-right');
 	divInputRight.id = 'inputContainer';
@@ -75,10 +106,29 @@ function createNoteElement(noteContent) {
 	divRightSide.appendChild(h4Title);
 	divRightSide.appendChild(divNoteList);
 	divRightSide.appendChild(divInputRight);
+
+
+    iAddNoteIcon.addEventListener('click', () => {
+        divInputContainer.style.display = divInputContainer.style.display === 'block' ? 'none' : 'block';
+    });
+    buttonAddNote.addEventListener('click', () => {
+        const noteContent = textareaNoteInput.value;
+        if (noteContent) {
+            addNote(noteContent);
+			saveNoteToLocalStorage(noteContent); 
+            textareaNoteInput.value = '';
+            divInputContainer.style.display = 'none';
+        }
+    });
 	
-	return divRightSide;
-  }
-  
-  // Export the function to be used in webpack or other modules
+
+	renderNotesFromLocalStorage();
+
+	return divRightSide; 
+}
+
+
+
+
   export { createRightSide };
   
