@@ -38,6 +38,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 				test: /\.(woff|woff2|eot|ttf|otf)$/i,
 				type: 'asset/resource',
 			},
+			{
+				test: /\.ico$/i,
+				type: 'asset/resource'
+			}
 		],
 	},
  };
