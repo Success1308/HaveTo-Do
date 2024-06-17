@@ -166,14 +166,36 @@ export function createLeftSide() {
 
     addIcon.addEventListener('click', () => {
         inputContainer.style.display = inputContainer.style.display === 'block' ? 'none' : 'block';
+        addIcon.className = inputContainer.style.display === 'block' ? 'fa-solid fa-xmark project-add-icon' : 'fa-solid fa-square-plus project-add-icon';
+
         addButton.addEventListener('click', () => {
             const projectName = textarea.value.trim();
             if (projectName) {
                 addProject(projectName);
                 textarea.value = '';
                 inputContainer.style.display = 'none';
+                addIcon.className = inputContainer.style.display === 'block' ? 'fa-solid fa-xmark project-add-icon' : 'fa-solid fa-square-plus project-add-icon';
             }
         });
+
+        textarea.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+              const projectName = textarea.value.trim();
+              if (projectName) {
+                addProject(projectName);
+                textarea.value = '';
+                inputContainer.style.display = 'none';
+                addIcon.className = inputContainer.style.display === 'block' ? 'fa-solid fa-xmark project-add-icon' : 'fa-solid fa-square-plus project-add-icon';
+              }
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!inputContainer.contains(event.target) && event.target !== addIcon) {
+              inputContainer.style.display = 'none';
+              addIcon.className = 'fa-solid fa-square-plus project-add-icon';
+            }
+          });
     });
 
     inputContainer.appendChild(textarea);

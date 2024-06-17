@@ -7,7 +7,7 @@ import { formatDistanceToNow } from 'date-fns';
 const storage = Storage();
 const todoList = document.createElement('div');
 todoList.classList.add('todo-list');
-
+const storage1 = window.localStorage;
 
 function renderTodos(project1) {
 	todoList.innerHTML = ''; 
@@ -93,7 +93,7 @@ function createTodoBody() {
 		const textValue = inputTag.value;
 		const priorityValue = inputPrioritySelect.value;
 
-		if (textValue && priorityValue && priorityValue !== 'Priority') {
+		if (textValue && priorityValue) {
 
 			const createdAt = new Date(); 
 
@@ -112,9 +112,23 @@ function createTodoBody() {
 			inputPrioritySelect.value = inputOptionDefault.value;
 
 			renderTodos(getCurrent());
+
+
 			
 		} else {
 			alert('Please fill out both the text and priority fields.');
+		}
+	});
+
+	inputTag.addEventListener('keypress', function(event) {
+		if (event.key === 'Enter') {
+		  plusIcon.click();
+		}
+	});
+
+	inputPrioritySelect.addEventListener('keypress', function(event) {
+		if (event.key === 'Enter') {
+		  plusIcon.click();
 		}
 	});
 
@@ -228,20 +242,31 @@ function createTodoElement(textValue, priorityValue, createdAt) {
 
 		const currentProject = getCurrent();
         const projectObject = storage.getProject(currentProject);
+		
+		const checkboxState = todoElement.classList.contains('completed');
+    	storage1.setItem('checkboxState', checkboxState);
 
         projectObject.toDos.forEach(todo => {
             if (todo.task === textValue && todo.priority === priorityValue) {
                 todo.completed = !todo.completed;
+				storage.saveProject(projectObject);
             }
         });
 
         storage.saveProject(projectObject);
 
 		if (todoElement.classList.contains('completed')) {
+			storage1.setItem('checkboxState', checkboxState);
             checkButton.style.color = '#6bffb8';
+            checkButton.style.backgroundColor = 'var(--third-dark-color)';
+            checkButton.style.borderRadius = '0.5rem';
+            checkButton.style.padding = '0.1rem 0.2rem';
+
         } else {
             checkButton.style.color = ''; 
+			checkButton.style.backgroundColor = '';
 		}
+
     });
 
     removeButton.addEventListener('click', function() {
@@ -256,7 +281,15 @@ function createTodoElement(textValue, priorityValue, createdAt) {
         todoElement.remove();
     });
 
-    return todoElement;
+	const checkboxState = storage1.getItem('checkboxState');
+	if (checkboxState === 'true') {
+		todoElement.classList.add('completed');
+		checkButton.style.color = '#6bffb8';
+		checkButton.style.backgroundColor = 'var(--third-dark-color)';
+		checkButton.style.borderRadius = '0.5rem';
+		checkButton.style.padding = '0.1rem 0.2rem';
+	}
+	return todoElement;
 }
 
 

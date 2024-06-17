@@ -110,6 +110,14 @@ function createNoteElement(noteContent) {
 
     iAddNoteIcon.addEventListener('click', () => {
         divInputContainer.style.display = divInputContainer.style.display === 'block' ? 'none' : 'block';
+		iAddNoteIcon.className = divInputContainer.style.display === 'block' ? 'fa-solid fa-xmark note-add-icon' : 'fa-solid fa-square-plus note-add-icon';
+
+		document.addEventListener('click', (event) => {
+			if (!divInputContainer.contains(event.target) && event.target !== iAddNoteIcon) {
+			  divInputContainer.style.display = 'none';
+			  iAddNoteIcon.className = 'fa-solid fa-square-plus note-add-icon';
+			}
+		  });
     });
     buttonAddNote.addEventListener('click', () => {
         const noteContent = textareaNoteInput.value;
@@ -118,8 +126,21 @@ function createNoteElement(noteContent) {
 			saveNoteToLocalStorage(noteContent); 
             textareaNoteInput.value = '';
             divInputContainer.style.display = 'none';
+			iAddNoteIcon.className = divInputContainer.style.display === 'block' ? 'fa-solid fa-xmark note-add-icon' : 'fa-solid fa-square-plus note-add-icon';
         }
     });
+	textareaNoteInput.addEventListener('keypress', (event) => {
+		if (event.key === 'Enter') {
+		  const noteContent = textareaNoteInput.value.trim();
+		  if (noteContent) {
+			addNote(noteContent);
+			saveNoteToLocalStorage(noteContent);
+			textareaNoteInput.value = '';
+			divInputContainer.style.display = 'none';
+			iAddNoteIcon.className = divInputContainer.style.display === 'block' ? 'fa-solid fa-xmark note-add-icon' : 'fa-solid fa-square-plus note-add-icon';
+		  }
+		}
+	  });
 	
 
 	renderNotesFromLocalStorage();
