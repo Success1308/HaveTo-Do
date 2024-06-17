@@ -499,7 +499,15 @@ body{
     padding: 10px;
 }
 
+
+
 .input-right>i,.input-left>i {
+	background: var(--bodybackground-color); 
+	color: var(--third-dark-color);
+	transition: color 0.3s, transform 0.3s;
+}
+
+.input-left > .fa-xmark {
 	background: var(--bodybackground-color); 
 	color: var(--third-dark-color);
 	transition: color 0.3s, transform 0.3s;
@@ -673,17 +681,6 @@ body{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* hover prop */
 
 
@@ -718,7 +715,6 @@ body{
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 0.5rem;
 }
-
 
 
 
