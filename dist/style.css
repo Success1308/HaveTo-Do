@@ -507,11 +507,20 @@ body{
 	transition: color 0.3s, transform 0.3s;
 }
 
-.input-left > .fa-xmark {
-	background: var(--bodybackground-color); 
-	color: var(--third-dark-color);
+.input-left > .fa-xmark, .input-right>.fa-xmark{
+	background: var(--third-dark-color); 
+	color: white;
 	transition: color 0.3s, transform 0.3s;
+	padding: 0.3rem 0.5rem;
+	border-radius: 0.5rem;
+	font-size: 1.5rem;
 }
+
+.input-left > .fa-xmark:hover , .input-right>.fa-xmark:hover{
+	background: var(--third-dark-color); 
+	color: white;
+}
+
 
 .input-right>i:hover,.input-left>i:hover {
 	color: var(--third-color);
