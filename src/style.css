@@ -950,6 +950,7 @@ body{
 		
 		.ago {
 			display: none;
+			font-size: 0.5rem;
 		}
 		
 		#Priority {

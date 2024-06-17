@@ -1,29 +1,31 @@
-
 // todoDom.js
 
 import Storage from './storage';
+import { getCurrent} from './projectDOM';
+import { formatDistanceToNow } from 'date-fns';
 
 const storage = Storage();
-let project = storage.getProject("Today");
-let currentProject = "Today"; 
+const todoList = document.createElement('div');
+todoList.classList.add('todo-list');
 
 function renderTodos(project1) {
+	todoList.innerHTML = ''; 
+	const projectObject = storage.getProject(project1);
 
-    const project = storage.getProject(project1);
-    if (!project) return;
+	if (!projectObject) {	return;	};
 
-    const todoList = document.querySelector('.todo-list');
-    todoList.innerHTML = ''; 
+	projectObject.toDos.forEach(todo => {
+		const todoElement = createTodoElement(todo.task, todo.priority);
+		todoList.appendChild(todoElement);
+	});
 
-    project.toDos.forEach(todo => {
-        const todoElement = createTodoElement(todo.title, todo.priority);
-        todoList.appendChild(todoElement);
-    });
 }
 
 
-
 function createTodoBody() {
+
+	renderTodos(getCurrent());
+
 	const bodyDiv = document.createElement('div');
 	bodyDiv.classList.add('body');
 
@@ -33,77 +35,81 @@ function createTodoBody() {
 	bodyDiv.appendChild(header);
   
 	// Todo List
-	const todoList = document.createElement('div');
-	todoList.classList.add('todo-list');
-	bodyDiv.appendChild(todoList);	
-	
-	// Todo Input
+	bodyDiv.appendChild(todoList);
+
+	//  input todo
+
 	const todoInput = document.createElement('div');
 	todoInput.classList.add('todo-input');
-  
+
 	const inputTag = document.createElement('input');
 	inputTag.type = 'text';
 	inputTag.classList.add('input-tag');
-	inputTag.required = true; 
+	inputTag.required = true;
 	todoInput.appendChild(inputTag);
-  
+
 	const inputPrioritySelect = document.createElement('select');
 	inputPrioritySelect.name = 'Priority';
 	inputPrioritySelect.id = 'Priority';
-	inputPrioritySelect.required = true; 
-  
+	inputPrioritySelect.required = true;
+
 	const inputOptionDefault = document.createElement('option');
 	inputOptionDefault.value = 'Priority';
-	inputOptionDefault.required = true; 
+	inputOptionDefault.required = true;
 	inputOptionDefault.selected = true;
 	inputOptionDefault.disabled = true;
 	inputOptionDefault.textContent = 'Priority';
 	inputPrioritySelect.appendChild(inputOptionDefault);
-  
+
 	const inputOptionHigh = document.createElement('option');
 	inputOptionHigh.value = 'High';
 	inputOptionHigh.textContent = 'High';
 	inputPrioritySelect.appendChild(inputOptionHigh);
-  
+
 	const inputOptionMedium = document.createElement('option');
 	inputOptionMedium.value = 'Medium';
 	inputOptionMedium.textContent = 'Medium';
 	inputPrioritySelect.appendChild(inputOptionMedium);
-  
+
 	const inputOptionLow = document.createElement('option');
 	inputOptionLow.value = 'Low';
 	inputOptionLow.textContent = 'Low';
 	inputPrioritySelect.appendChild(inputOptionLow);
-  
+
 	todoInput.appendChild(inputPrioritySelect);
-  
+
 	const plusIcon = document.createElement('i');
 	plusIcon.classList.add('fa-solid', 'fa-square-plus');
 	todoInput.appendChild(plusIcon);
-  
+
 
 	plusIcon.addEventListener('click', function() {
+
 		const textValue = inputTag.value;
 		const priorityValue = inputPrioritySelect.value;
 
-		if (textValue && priorityValue) {
-
+		if (textValue && priorityValue && priorityValue !== 'Priority') {
 			const newTodo = createTodoElement(textValue, priorityValue);
 			todoList.appendChild(newTodo);
 
-			const todoObject = { title: textValue, priority: priorityValue };
-			const project = storage.getProject(currentProject.name);
-			project.addTodo(todoObject);
-			storage.saveProject(project);
+			const todoObject = { task: textValue, priority: priorityValue };
 
-			inputTag.value = ''; 
-			inputPrioritySelect.value = inputOptionDefault.value;			
+			const currentProject = getCurrent();
+			const projectObject = storage.getProject(currentProject);
+			projectObject.toDos.push(todoObject);
+			storage.saveProject(projectObject); 
+
+			inputTag.value = '';
+			inputPrioritySelect.value = inputOptionDefault.value;
+
+			renderTodos(getCurrent());
+			
 		} else {
 			alert('Please fill out both the text and priority fields.');
 		}
 	});
 
-	bodyDiv.appendChild(todoInput);  
+	bodyDiv.appendChild(todoInput);	
 	return bodyDiv;
 
 }
@@ -124,9 +130,12 @@ function createTodoElement(textValue, priorityValue) {
 
     const bottomSection = document.createElement('div');
     bottomSection.classList.add('bottom-section');
+
+
+    const createdAt = new Date(); 
     const ago = document.createElement('p');
     ago.classList.add('ago');
-    ago.textContent = '10 minutes ago';
+    ago.textContent = formatDistanceToNow(createdAt, { addSuffix: true });
     bottomSection.appendChild(ago);
 
     const prioritySelect = document.createElement('select');
@@ -181,12 +190,52 @@ function createTodoElement(textValue, priorityValue) {
     bottomSection.appendChild(actions);
     todoElement.appendChild(bottomSection);
 
+	prioritySelect.addEventListener('change', function() {
+        const newPriority = prioritySelect.value;
+
+        // Update priority in storage
+        const currentProject = getCurrent();
+        const projectObject = storage.getProject(currentProject);
+
+        projectObject.toDos.forEach(todo => {
+            if (todo.task === textValue && todo.priority === priorityValue) {
+                todo.priority = newPriority;
+            }
+        });
+
+        storage.saveProject(projectObject);
+    });
 
 	checkButton.addEventListener('click', function() {
         todoElement.classList.toggle('completed');
+
+		const currentProject = getCurrent();
+        const projectObject = storage.getProject(currentProject);
+
+        projectObject.toDos.forEach(todo => {
+            if (todo.task === textValue && todo.priority === priorityValue) {
+                todo.completed = !todo.completed;
+            }
+        });
+
+        storage.saveProject(projectObject);
+
+		if (todoElement.classList.contains('completed')) {
+            checkButton.style.color = '#6bffb8';
+        } else {
+            checkButton.style.color = ''; 
+		}
     });
 
     removeButton.addEventListener('click', function() {
+
+		const currentProject = getCurrent();
+		const projectObject = storage.getProject(currentProject);
+		projectObject.toDos = projectObject.toDos.filter(todo => {
+			return !(todo.task === textValue && todo.priority === priorityValue);
+		});
+		storage.saveProject(projectObject); 
+
         todoElement.remove();
     });
 
@@ -194,8 +243,21 @@ function createTodoElement(textValue, priorityValue) {
 }
 
 
+
+function calculateTimeAgo() {
+    const now = new Date();
+    const minutesAgo = Math.floor(Math.random() * 60); // Example: Random minutes ago for demonstration
+
+    const agoText = `${minutesAgo} minutes ago`; // Adjust this based on your actual time calculation
+
+    return agoText;
+}
+
+
+
 export{
 	createTodoBody,
 	createTodoElement,
-	renderTodos
+	renderTodos,
 };
+

@@ -2,12 +2,21 @@
 
 import Storage from './storage';
 import Project from './project';
-import {renderTodos} from './todoDom';
+import {renderTodos, createTodoBody, createTodoElement} from './todoDom';
 
 
 const storage = Storage();
-let currentProject = "Today"; 
 
+let currentProject;
+
+export function setCurrent(projectName) {
+    currentProject = projectName;
+    return currentProject;
+}
+
+export function getCurrent() {
+    return currentProject;
+}
 
 // Create project-list div
 const projectList = document.createElement('div');
@@ -19,9 +28,9 @@ const projectDefault = document.createElement('div');
 
 // create project
 function addProject(projectName) {
-    const projectcre = Project(projectName);
-    storage.saveProject(projectcre.projectName);
-    const projectElement = createProjectElement(projectcre);
+    const projectCre = Project(projectName);
+    storage.saveProject(projectCre);
+    const projectElement = createProjectElement(projectCre);
     projectList.appendChild(projectElement);
 }
 
@@ -38,28 +47,31 @@ function createProjectElement(project) {
     removeButton.className = 'remove-project';
     removeButton.innerHTML = '<i class="fas fa-times"></i>';
     removeButton.addEventListener('click', () => {
+        setCurrent(project.projectName);
         removeProject(project.projectName);
-        projectDefault.style.backgroundColor = "#e4d9f2";
-        renderTodos('Today'); 
+        projectDefault.style.backgroundColor = "red";
+        renderTodos("Today");
     });
 
     projectElement.appendChild(projectContent);
     projectElement.appendChild(removeButton);
 
     projectElement.addEventListener('click', () => {
-        currentProject = project;
+        setCurrent(project.projectName);
 
         const other1 = document.querySelectorAll('.project');  
         other1.forEach(element => {
             element.style.backgroundColor = "#fbf8ff";
         });
         projectElement.style.backgroundColor = "#e4d9f2";
-        projectDefault.style.backgroundColor = "#fbf8ff";   
+        projectDefault.style.backgroundColor = "#fbf8ff";  
         
-        renderTodos(currentProject.projectName);
+        
+        renderTodos(getCurrent());
     });
     return projectElement;
 }
+
 
 // remove projects
 function removeProject(projectName) {
@@ -68,16 +80,16 @@ function removeProject(projectName) {
     const projectElements = document.querySelectorAll('.project');
     projectElements.forEach(element => {
         if (element.textContent.trim() === projectName) {
-            element.remove();
-            
+            element.remove();            
         }
     });
     // Remove from storage
     storage.removeProject(projectName);
+
+    // Set the default project
+    setCurrent("Today");
+    renderTodos(getCurrent());
 }
-
-
-
 
 export function createLeftSide() {
     
@@ -90,32 +102,54 @@ export function createLeftSide() {
     h4.textContent = 'Projects';
 
     projectList.innerHTML = '';
-    
     projectDefault.className = 'project-default';
     projectDefault.style.backgroundColor = "#e4d9f2"; 
     
     const projectDefaultContent = document.createElement('p');
     projectDefaultContent.className = 'project-content';
     projectDefaultContent.textContent = 'Today';
+
+    let todayProject = storage.getProject("Today");
+    if (!todayProject) {
+        const projectDef = Project("Today");
+        setCurrent(projectDef.projectName);
+        storage.saveProject(projectDef);
+        projectDefault.appendChild(projectDefaultContent); 
+         
+        projectDefault.addEventListener('click', () => {
+    
+            setCurrent(projectDef.projectName);
+    
+            projectDefault.style.backgroundColor = "#e4d9f2"; 
+            const other = document.querySelectorAll('.project');  
+            other.forEach(element => {
+                element.style.backgroundColor = "#fbf8ff";
+            }); 
+    
+            renderTodos(getCurrent());
+        });
+        projectList.appendChild(projectDefault);
+
+    }else{
+        setCurrent(todayProject.projectName);
+        storage.saveProject(todayProject);
+        projectDefault.appendChild(projectDefaultContent); 
+        projectList.appendChild(projectDefault);
+        projectDefault.addEventListener('click', () => {
+    
+            setCurrent(todayProject.projectName);
+    
+            projectDefault.style.backgroundColor = "#e4d9f2"; 
+            const other = document.querySelectorAll('.project');  
+            other.forEach(element => {
+                element.style.backgroundColor = "#fbf8ff";
+            }); 
+    
+            renderTodos(getCurrent());
+        });
+    }
     
 
-    const projectDef = Project("Today");
-    storage.saveProject(projectDef);
-    projectDefault.appendChild(projectDefaultContent); 
-     
-    projectDefault.addEventListener('click', () => {
-        projectDefault.style.backgroundColor = "#e4d9f2"; 
-        const other = document.querySelectorAll('.project');  
-        other.forEach(element => {
-            element.style.backgroundColor = "#fbf8ff";
-        });    
-        renderTodos('Today');
-    });
-    projectList.appendChild(projectDefault);
-
-
-    
-    
     // Create input-left div
     const inputLeft = document.createElement('div');
     inputLeft.className = 'input-left';
@@ -155,5 +189,17 @@ export function createLeftSide() {
     leftSide.appendChild(h4);
     leftSide.appendChild(projectList);
     leftSide.appendChild(inputLeft);
+
+    let allProjects = storage.loadProjects();
+
+    allProjects.forEach(element => {
+        if (element.projectName !== "Today") {
+            const projectElement1 = createProjectElement(element);
+            projectList.appendChild(projectElement1);
+        }
+    });
+
+    renderTodos(getCurrent());
+
     return leftSide;
 }
