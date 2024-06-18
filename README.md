@@ -92,33 +92,33 @@ HaveTo-Do is designed to function seamlessly even without an internet connection
 The project follows a modular structure for better maintainability:
 
 HaveTo-Do/
-├── dist/ # Compiled files for production
-│ ├── b9c01fec58f8e52e850f.otf
-│ ├── f65bc822849ae3eadf85.png
-│ ├── index.html
-│ ├── main.js
-│ └── style.css
-├── src/ # Source files
-│ ├── assets/ # Images and static assets
-│ ├── footer.js
-│ ├── header.js
-│ ├── home.js
-│ ├── index.html
-│ ├── index.js
-│ ├── layout.js
-│ ├── notesdom.js
-│ ├── project.js
-│ ├── projectDOM.js
-│ ├── quotes.js
-│ ├── storage.js
-│ ├── style.css
-│ ├── todo.js
-│ └── todoDom.js
-├── .gitignore
-├── LICENSE
-├── package-lock.json
-├── package.json
-└── webpack.config.js
+├── dist/ # Compiled files for production <br>
+│ ├── b9c01fec58f8e52e850f.otf <br>
+│ ├── f65bc822849ae3eadf85.png <br>
+│ ├── index.html<br>
+│ ├── main.js<br>
+│ └── style.css<br>
+├── src/ # Source files<br>
+│ ├── assets/ # Images and static assets<br>
+│ ├── footer.js<br>
+│ ├── header.js<br>
+│ ├── home.js<br>
+│ ├── index.html<br>
+│ ├── index.js<br>
+│ ├── layout.js<br>
+│ ├── notesdom.js<br>
+│ ├── project.js<br>
+│ ├── projectDOM.js<br>
+│ ├── quotes.js<br>
+│ ├── storage.js<br>
+│ ├── style.css<br>
+│ ├── todo.js<br>
+│ └── todoDom.js<br>
+├── .gitignore<br>
+├── LICENSE<br>
+├── package-lock.json<br>
+├── package.json<br>
+└── webpack.config.js<br>
 
 
 
