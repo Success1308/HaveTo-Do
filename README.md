@@ -91,74 +91,34 @@ HaveTo-Do is designed to function seamlessly even without an internet connection
 
 The project follows a modular structure for better maintainability:
 
-
-
-
-
-
-
-
-
-
-# To-Do
-## dist
-#### Compiled files for production
-##### Files
-* b9c01fec58f8e52e850f.otf
-* f65bc822849ae3eadf85.png
-* index.html
-* main.js
-* style.css
-
-## src
-#### Source files
-##### Files
-* assets
-	+ Images and static assets
-* footer.js
-* header.js
-* home.js
-* index.html
-* index.js
-* layout.js
-* notesdom.js
-* project.js
-* projectDOM.js
-* quotes.js
-* storage.js
-* style.css
-* todo.js
-* todoDom.js
-
-## Other Files
-* .gitignore
-* LICENSE
-* package-lock.json
-* package.json
-* webpack.config.js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+HaveTo-Do/
+├── dist/ # Compiled files for production
+│ ├── b9c01fec58f8e52e850f.otf
+│ ├── f65bc822849ae3eadf85.png
+│ ├── index.html
+│ ├── main.js
+│ └── style.css
+├── src/ # Source files
+│ ├── assets/ # Images and static assets
+│ ├── footer.js
+│ ├── header.js
+│ ├── home.js
+│ ├── index.html
+│ ├── index.js
+│ ├── layout.js
+│ ├── notesdom.js
+│ ├── project.js
+│ ├── projectDOM.js
+│ ├── quotes.js
+│ ├── storage.js
+│ ├── style.css
+│ ├── todo.js
+│ └── todoDom.js
+├── .gitignore
+├── LICENSE
+├── package-lock.json
+├── package.json
+└── webpack.config.js
 
 
 
