@@ -29,7 +29,7 @@ export default function Storage() {
     projects = [];
     for (let i = 0; i < localStorage.length; i++) {
       const projectName = localStorage.key(i);
-      const project = JSON.parse(localStorage.getItem(`projectName`));
+      const project = JSON.parse(localStorage.getItem(projectName));
       if (project && project.projectName) {
         projects.push(project);
       }
