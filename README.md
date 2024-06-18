@@ -23,7 +23,7 @@ HaveTo-Do stands out with its:
 
 - **Intuitive Interface**: Effortlessly manage tasks with our user-friendly design.
 - **Modular Design**: Simplified maintenance and future enhancements with a well-organized codebase.
-- **Task Prioritization **: Easily prioritize tasks with a simple drag-and-drop interface or a priority ranking system.
+- **Task Prioritization**: Easily prioritize tasks with a simple drag-and-drop interface or a priority ranking system.
 - **Progress Tracking**: Visualize your progress with a task completion percentage or a habit tracker, motivating you to stay consistent and focused.
 - **Random Quote Display**:  Display a random quote from a curated list or a user-defined collection.
 
