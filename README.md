@@ -2,7 +2,7 @@
 
 Welcome to HaveTo-Do, the ultimate web-based task manager designed to seamlessly blend style with functionality. Whether you're juggling work, personal projects, or daily errands, HaveTo-Do helps you stay organized and productive. This README will guide you through everything from installation to contributing, ensuring you get the most out of your experience.
 
-<img src="https://github.com/Success1308/HaveTo-Do/assets/167788445/df6309b0-532a-495d-98c3-7bf9b79c02bb" alt="logo" width="200" style="border: 2px solid #000; border-radius: 10px;"/>
+<img src="https://github.com/Success1308/HaveTo-Do/assets/167788445/df6309b0-532a-495d-98c3-7bf9b79c02bb" alt="logo" width="200" style="border: 2px solid white; border-radius: 10px;"/>
 
 ## Table of Contents
 
