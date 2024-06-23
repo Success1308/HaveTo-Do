@@ -136,9 +136,6 @@ HaveTo-Do/
 - `package.json`: Manages project dependencies and scripts.
 - `LICENSE`: Specifies the license under which the project is distributed.
 
-## Contributing
-
-We welcome contributions from the community! If you have ideas for improvement or have identified issues, feel free to submit a pull request. Please review our contribution guidelines before getting started.
 
 ## License
 
