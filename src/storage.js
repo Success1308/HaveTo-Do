@@ -24,14 +24,15 @@ export default function Storage() {
     return gotProject;
   };
 
-  let projects = [];
   const loadProjects = () => {
     projects = [];
     for (let i = 0; i < localStorage.length; i++) {
-      const projectName = localStorage.key(i);
-      const project = JSON.parse(localStorage.getItem(projectName));
-      if (project && project.projectName) {
-        projects.push(project);
+      const key = localStorage.key(i);
+      if (key.startsWith("project-")) {
+        const project = JSON.parse(localStorage.getItem(key));
+        if (project && project.projectName) {
+          projects.push(project);
+        }
       }
     }
     return projects;
