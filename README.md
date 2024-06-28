@@ -10,8 +10,6 @@ Welcome to HaveTo-Do, the ultimate web-based task manager designed to seamlessly
 - [Getting Started](#getting-started)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Customization](#customization)
-- [Offline Support](#offline-support)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -81,14 +79,6 @@ Here's how to use HaveTo-Do:
 
 5. **Organize tasks:**
    - Drag and drop tasks to rearrange their order.
-
-## Customization
-
-Make HaveTo-Do your own by exploring the available styles in the settings menu. Change themes, colors, and fonts to suit your preferences.
-
-## Offline Support
-
-HaveTo-Do is designed to function seamlessly even without an internet connection. Your tasks are stored locally, ensuring you can stay on top of your to-do list anytime, anywhere.
 
 ## Project Structure
 
