@@ -145,8 +145,8 @@ body {
 .home-logo {
   background: #ffffff url(f65bc822849ae3eadf85.png) center center/cover no-repeat
     content-box;
-  height: 15rem;
-  width: 15rem;
+  height: 13rem;
+  width: 13rem;
   box-shadow: 15px 13px 31px 6px rgba(104, 83, 105, 0.34);
   -webkit-box-shadow: 15px 13px 31px 6px rgba(104, 83, 105, 0.34);
   -moz-box-shadow: 15px 13px 31px 6px rgba(104, 83, 105, 0.34);
@@ -162,7 +162,7 @@ body {
 
 .home-Text {
   font-family: ThisCafe;
-  font-size: 5rem;
+  font-size: 4rem;
   margin-top: 2rem;
   color: var(--third-dark-color);
   font-weight: 700;
@@ -177,7 +177,7 @@ body {
 
 .home-input {
   font-family: ThisCafe;
-  font-size: 4rem;
+  font-size: 3rem;
   border-radius: 2rem;
   width: 50%;
   padding-left: 2rem;
@@ -189,7 +189,7 @@ body {
 
 .home-btn {
   font-family: ThisCafe;
-  font-size: 3rem;
+  font-size: 2.8rem;
   margin-top: 2rem;
   width: 20%;
   color: var(--third-dark-color);
